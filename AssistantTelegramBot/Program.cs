@@ -2,6 +2,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace AssistantTelegramBot
 {
@@ -21,14 +22,42 @@ namespace AssistantTelegramBot
         private static void answer(object sender, MessageEventArgs messageEventArgs)
         {
             var message = messageEventArgs.Message;
-            if (message.Text == "/reply")
-            {
-                bot.SendTextMessageAsync(message.Chat.Id, "hi");
+            switch (message.Text) {
+                case "/reply":
+                    bot.SendTextMessageAsync(message.Chat.Id, "hi");
+                    break;
+                case "/keyboard":
+                    bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
+                    var inlineKeyboard = new InlineKeyboardMarkup(new[]
+                    {
+                        new[]
+                        {
+                            InlineKeyboardButton.WithCallbackData("1"),
+                            InlineKeyboardButton.WithCallbackData("2"),
+                            InlineKeyboardButton.WithCallbackData("3")
+                        },
+                        new[]
+                        {
+                            InlineKeyboardButton.WithCallbackData("4"),
+                            InlineKeyboardButton.WithCallbackData("5"),
+                            InlineKeyboardButton.WithCallbackData("6")
+                        },
+                    });
+                    bot.SendTextMessageAsync(message.Chat.Id, "ok", replyMarkup: inlineKeyboard);
+                    break;
+                case "/keyboardCustom":
+                    ReplyKeyboardMarkup keyboardMarkup = new[]
+                    {
+                        new []{"0", "1"},
+                        new []{"2", "3"}
+                    };
+                    bot.SendTextMessageAsync(message.Chat.Id, "ok", replyMarkup: keyboardMarkup);
+                    break;
+                default:
+                    bot.SendTextMessageAsync(message.Chat.Id, message.Text);
+                    break;
             }
-            else
-            {
-                bot.SendTextMessageAsync(message.Chat.Id, message.Text);
-            }
+        
         }
     }
 }
