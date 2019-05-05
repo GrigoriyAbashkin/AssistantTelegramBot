@@ -8,7 +8,7 @@ namespace AssistantTelegramBot
 {
     class Program
     {
-        private static readonly TelegramBotClient bot = new TelegramBotClient("825644646:AAG2dgY8DmeEZtkUhsMZx4boJNCvg-TSfDQ");
+        private static readonly TelegramBotClient bot = new TelegramBotClient("");
 
         static void Main(string[] args)
         {
