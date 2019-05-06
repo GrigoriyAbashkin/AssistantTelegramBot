@@ -12,12 +12,14 @@ namespace AssistantTelegramBot
     class Program
     {
         private static readonly TelegramBotClient bot = new TelegramBotClient("");
+        private static DataSet dataSet = new DataSet();
 
         static void Main(string[] args)
         {
             bot.OnMessage += answer;
 
-            Console.WriteLine(connectingDb());
+            connectingDb();
+
             bot.StartReceiving(Array.Empty<UpdateType>());
             Console.ReadLine();
             bot.StopReceiving();
@@ -31,11 +33,18 @@ namespace AssistantTelegramBot
                     bot.SendTextMessageAsync(message.Chat.Id, "hi");
                     break;
                 case "/keyboardCustom":
-                    ReplyKeyboardMarkup keyboardMarkup = new[]
+                    
+                    DataRowCollection table = dataSet.Tables["Theme"].Rows;
+                    string[][] themes = new string[table.Count][];
+                    for (int i = 0; i < table.Count; i++)
                     {
-                        new []{"0", "1"},
-                        new []{"2", "3"}
-                    };
+                        themes[i] = new string[1] { table[i]["Name"].ToString() };
+                    }
+                    //ReplyKeyboardMarkup keyboardMarkup = new[]
+                    //{
+                    //    themes
+                    //};
+                    ReplyKeyboardMarkup keyboardMarkup = themes;
                     bot.SendTextMessageAsync(message.Chat.Id, "ok", replyMarkup: keyboardMarkup);
                     break;
                 default:
@@ -45,14 +54,12 @@ namespace AssistantTelegramBot
         
         }
 
-        private static string connectingDb()
+        private static void connectingDb()
         {
             string connectionString = @"Data Source=.\SQLEXPRESS; Initial Catalog=AssistantDb; Integrated Security=True";
             string SelectAllTable = @"SELECT * FROM Theme
                                       SELECT * FROM Question
                                       SELECT * FROM Answer";
-
-            string themes = "1";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -61,14 +68,13 @@ namespace AssistantTelegramBot
                 adapter.TableMappings.Add("Table",  "Theme");
                 adapter.TableMappings.Add("Table1", "Question");
                 adapter.TableMappings.Add("Table2", "Answer");
-                DataSet dataSet = new DataSet();
+                //DataSet dataSet = new DataSet();
                 adapter.Fill(dataSet);
-                foreach (DataRow i in dataSet.Tables["Theme"].Rows)
+                /*foreach (DataRow i in dataSet.Tables["Theme"].Rows)
                 {
                     themes = i["Name"].ToString();
-                }
+                }*/
             }
-            return themes;
         }
     }
 }
