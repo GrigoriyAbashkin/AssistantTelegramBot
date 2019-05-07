@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssistantTelegramBot", "AssistantTelegramBot\AssistantTelegramBot.csproj", "{DB578E7A-9C6C-4D30-9DCE-7740EC9BEB8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssistantTelegramBot.Console", "AssistantTelegramBot\AssistantTelegramBot.Console.csproj", "{DB578E7A-9C6C-4D30-9DCE-7740EC9BEB8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssistantBot.Telegram", "AssistantBot.Telegram\AssistantBot.Telegram.csproj", "{FCC03E41-27C3-4552-9982-9A2A88393F9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DB578E7A-9C6C-4D30-9DCE-7740EC9BEB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB578E7A-9C6C-4D30-9DCE-7740EC9BEB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB578E7A-9C6C-4D30-9DCE-7740EC9BEB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC03E41-27C3-4552-9982-9A2A88393F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC03E41-27C3-4552-9982-9A2A88393F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC03E41-27C3-4552-9982-9A2A88393F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC03E41-27C3-4552-9982-9A2A88393F9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
