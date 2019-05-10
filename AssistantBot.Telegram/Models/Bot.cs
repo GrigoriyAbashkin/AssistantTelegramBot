@@ -13,7 +13,7 @@ namespace AssistantBot.Telegram.Models
 
         static Bot()
         {
-            Token = "";
+            Token = "825644646:AAG5NpRzPEjtIuw2g0k_eo9Uv1B3NjufaBs";
             bot = new TelegramBotClient(Token);
         }
     }

@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Тема</th>
+                <th scope="col">Вопрос</th>
+                <th scope="col">Ответ</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+<script>
+    $(function () {
+        $.ajax({
+            method: 'GET',
+            dataType: 'json',
+            url: '/api/GetAllThemes',
+            success: function (e) {
+                //$.each(e, function (key, value){
+                //    $('#ex').text(value.Name);
+                //});
+
+                //
+                $.each(e, function (key, value) {
+                    $('tbody').append(`
+                    <tr>
+                    <td>${key}</td>
+                    <td>${value.Name}</td>
+                    <td>${value.Name}</td>
+                    </tr>
+                `);
+                });
+               
+                //
+            }
+        });
+    });
+</script>
+}

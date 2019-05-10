@@ -11,14 +11,14 @@ namespace AssistantTelegramBot
 {
     class Program
     {
-        private static readonly TelegramBotClient bot = new TelegramBotClient("");
-        private static DataSet dataSet = new DataSet();
+        private static readonly TelegramBotClient bot = new TelegramBotClient("825644646:AAG5NpRzPEjtIuw2g0k_eo9Uv1B3NjufaBs");
+        //private static DataSet dataSet = new DataSet();
 
         static void Main(string[] args)
         {
             bot.OnMessage += answer;
 
-            connectingDb();
+            //connectingDb();
 
             bot.StartReceiving(Array.Empty<UpdateType>());
             Console.ReadLine();
@@ -32,21 +32,21 @@ namespace AssistantTelegramBot
                 case "/reply":
                     bot.SendTextMessageAsync(message.Chat.Id, "hi");
                     break;
-                case "/keyboardCustom":
+                //case "/keyboardCustom":
                     
-                    DataRowCollection table = dataSet.Tables["Theme"].Rows;
-                    string[][] themes = new string[table.Count][];
-                    for (int i = 0; i < table.Count; i++)
-                    {
-                        themes[i] = new string[1] { table[i]["Name"].ToString() };
-                    }
-                    //ReplyKeyboardMarkup keyboardMarkup = new[]
-                    //{
-                    //    themes
-                    //};
-                    ReplyKeyboardMarkup keyboardMarkup = themes;
-                    bot.SendTextMessageAsync(message.Chat.Id, "ok", replyMarkup: keyboardMarkup);
-                    break;
+                //    DataRowCollection table = dataSet.Tables["Theme"].Rows;
+                //    string[][] themes = new string[table.Count][];
+                //    for (int i = 0; i < table.Count; i++)
+                //    {
+                //        themes[i] = new string[1] { table[i]["Name"].ToString() };
+                //    }
+                //    //ReplyKeyboardMarkup keyboardMarkup = new[]
+                //    //{
+                //    //    themes
+                //    //};
+                //    ReplyKeyboardMarkup keyboardMarkup = themes;
+                //    bot.SendTextMessageAsync(message.Chat.Id, "ok", replyMarkup: keyboardMarkup);
+                //    break;
                 default:
                     bot.SendTextMessageAsync(message.Chat.Id, message.Text);
                     break;
@@ -54,27 +54,27 @@ namespace AssistantTelegramBot
         
         }
 
-        private static void connectingDb()
-        {
-            string connectionString = @"Data Source=.\SQLEXPRESS; Initial Catalog=AssistantDb; Integrated Security=True";
-            string SelectAllTable = @"SELECT * FROM Theme
-                                      SELECT * FROM Question
-                                      SELECT * FROM Answer";
+        //private static void connectingDb()
+        //{
+        //    string connectionString = @"Data Source=.\SQLEXPRESS; Initial Catalog=AssistantDb; Integrated Security=True";
+        //    string SelectAllTable = @"SELECT * FROM Theme
+        //                              SELECT * FROM Question
+        //                              SELECT * FROM Answer";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(SelectAllTable, connection);
-                adapter.TableMappings.Add("Table",  "Theme");
-                adapter.TableMappings.Add("Table1", "Question");
-                adapter.TableMappings.Add("Table2", "Answer");
-                //DataSet dataSet = new DataSet();
-                adapter.Fill(dataSet);
-                /*foreach (DataRow i in dataSet.Tables["Theme"].Rows)
-                {
-                    themes = i["Name"].ToString();
-                }*/
-            }
-        }
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+        //        SqlDataAdapter adapter = new SqlDataAdapter(SelectAllTable, connection);
+        //        adapter.TableMappings.Add("Table",  "Theme");
+        //        adapter.TableMappings.Add("Table1", "Question");
+        //        adapter.TableMappings.Add("Table2", "Answer");
+        //        //DataSet dataSet = new DataSet();
+        //        adapter.Fill(dataSet);
+        //        /*foreach (DataRow i in dataSet.Tables["Theme"].Rows)
+        //        {
+        //            themes = i["Name"].ToString();
+        //        }*/
+        //    }
+        //}
     }
 }

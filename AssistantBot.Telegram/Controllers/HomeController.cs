@@ -35,5 +35,10 @@ namespace AssistantBot.Telegram.Controllers
 
             return View();
         }
+
+        public ActionResult Redaction()
+        {
+            return View();
+        }
     }
 }

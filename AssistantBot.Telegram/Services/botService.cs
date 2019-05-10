@@ -41,6 +41,7 @@ namespace AssistantBot.Telegram.Services
                     break;
                 case "/start":
                     Array nameThemes = themes.Select(n => n.Name).ToArray();
+                    string welcome = "Здравствуйте. Вас приветствует Сервисная Группа. Чем могу Вам помочь?";
                     textMenu = new string[nameThemes.Length][];
                     for (int i = 0; i < nameThemes.Length; i++)
                     {
@@ -48,6 +49,7 @@ namespace AssistantBot.Telegram.Services
                     }
                     ReplyKeyboardMarkup keyboardMarkup = textMenu;
                     Bot.bot.SendTextMessageAsync(message.Chat.Id, "Здравствуйте. Вас приветствует Сервисная Группа. Чем могу Вам помочь?", replyMarkup: keyboardMarkup);
+                    //createKeyBoard(message.Chat.Id, nameThemes, welcome);
                     break;
                 default:
                     //Bot.bot.SendTextMessageAsync(message.Chat.Id, message.Text);
@@ -64,10 +66,36 @@ namespace AssistantBot.Telegram.Services
                         }
                         keyboardMarkup = textMenu;
                         Bot.bot.SendTextMessageAsync(message.Chat.Id, question, replyMarkup: keyboardMarkup);
-
+                        //createKeyBoard(message.Chat.Id, nameAnswer, question);
                     }
                     break;
             }
+        }
+
+        // прочее
+        // находим вопросы по теме
+        private IQueryable<string> findQuestion(string nameTheme)
+        {
+            // номер выводимого вопроса
+            //int numberQuestion = 0;
+
+            // находим id, темы которую выбрал пользователь
+            int themeId = _db.Themes.Where(n => n.Name == nameTheme).Select(i => i.Id).FirstOrDefault();
+            // ищем все вопросы c id темы
+            IQueryable<string> questions = _db.Questions.Where(t => t.ThemeId == themeId).Select(n => n.Name);
+            return questions;
+        }
+
+        // создаем клавиатуру (id чата, текст таблицы, строка приветствия)
+        private void createKeyBoard(long chatId, Array textModels, string textGreet)
+        {
+            string[][] textRow = new string[textModels.Length][];
+            for (int i = 0; i < textModels.Length; i++)
+            {
+                textRow[i] = new string[1] { textModels.GetValue(i).ToString() };
+            }
+            ReplyKeyboardMarkup keyboardMarkup = textRow;
+            Bot.bot.SendTextMessageAsync(chatId, textGreet, replyMarkup: keyboardMarkup);
         }
     }
 }
